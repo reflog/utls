@@ -420,18 +420,16 @@ func NewResumptionState(ticket []byte, state *SessionState) (*ClientSessionState
 	}, nil
 }
 
-// // DecryptTicketWith decrypts an encrypted session ticket
-// // using a TicketKeys (ie []TicketKey) struct
-// //
-// // usedOldKey will be true if the key used for decryption is
-// // not the first in the []TicketKey slice
-// //
-// // [uTLS] changed to be made public and take a TicketKeys and use a fake conn receiver
-// func DecryptTicketWith(encrypted []byte, tks TicketKeys) (plaintext []byte, usedOldKey bool) {
-// 	// create fake conn
-// 	c := &Conn{
-// 		ticketKeys: tks.ToPrivate(),
-// 	}
+// DecryptTicketWith decrypts an encrypted session ticket
+// using a TicketKeys (ie []TicketKey) struct
+//
+// usedOldKey will be true if the key used for decryption is
+// not the first in the []TicketKey slice
+//
+// [uTLS] changed to be made public and take a TicketKeys and use a fake conn receiver
+func DecryptTicketWith(encrypted []byte, tks TicketKeys) (plaintext []byte) {
+	// create fake conn
+	c := &Config{}
 
-// 	return c.decryptTicket(encrypted)
-// }
+	return c.decryptTicket(encrypted, tks.ToPrivate())
+}
